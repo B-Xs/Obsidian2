@@ -3013,259 +3013,239 @@ do
     end
 
     function Funcs:AddSlider(Idx, Info)
-        Info = Library:Validate(Info, Templates.Slider)
+    Info = Library:Validate(Info, Templates.Slider)
 
-        local Groupbox = self
-        local Container = Groupbox.Container
+    local Groupbox = self
+    local Container = Groupbox.Container
 
-        local Slider = {
-            Text = Info.Text,
-            Value = Info.Default,
-            Min = Info.Min,
-            Max = Info.Max,
+    local Slider = {
+        Text = Info.Text,
+        Value = Info.Default,
+        Min = Info.Min,
+        Max = Info.Max,
 
-            Prefix = Info.Prefix,
-            Suffix = Info.Suffix,
+        Prefix = Info.Prefix,
+        Suffix = Info.Suffix,
 
-            Tooltip = Info.Tooltip,
-            DisabledTooltip = Info.DisabledTooltip,
-            TooltipTable = nil,
+        Tooltip = Info.Tooltip,
+        DisabledTooltip = Info.DisabledTooltip,
+        TooltipTable = nil,
 
-            Callback = Info.Callback,
-            Changed = Info.Changed,
+        Callback = Info.Callback,
+        Changed = Info.Changed,
 
-            Disabled = Info.Disabled,
-            Visible = Info.Visible,
+        Disabled = Info.Disabled,
+        Visible = Info.Visible,
 
-            Type = "Slider",
-        }
+        Type = "Slider",
+    }
 
-        local Holder = New("Frame", {
+    local Holder = New("Frame", {
+        BackgroundTransparency = 1,
+        Size = UDim2.new(1, 0, 0, Info.Compact and 13 or 31),
+        Visible = Slider.Visible,
+        Parent = Container,
+    })
+
+    local SliderLabel
+    if not Info.Compact then
+        SliderLabel = New("TextLabel", {
             BackgroundTransparency = 1,
-            Size = UDim2.new(1, 0, 0, Info.Compact and 13 or 31),
-            Visible = Slider.Visible,
-            Parent = Container,
-        })
-
-        local SliderLabel
-        if not Info.Compact then
-            SliderLabel = New("TextLabel", {
-                BackgroundTransparency = 1,
-                Size = UDim2.new(1, 0, 0, 14),
-                Text = Slider.Text,
-                TextSize = 14,
-                TextXAlignment = Enum.TextXAlignment.Left,
-                Parent = Holder,
-            })
-        end
-
-        local Bar = New("TextButton", {
-            Active = not Slider.Disabled,
-            AnchorPoint = Vector2.new(0, 1),
-            BackgroundColor3 = "MainColor",
-            BorderColor3 = "OutlineColor",
-            BorderSizePixel = 1,
-            Position = UDim2.fromScale(0, 1),
-            Size = UDim2.new(1, 0, 0, 13),
-            Text = "",
+            Size = UDim2.new(1, 0, 0, 14),
+            Text = Slider.Text,
+            TextSize = 14,
+            TextXAlignment = Enum.TextXAlignment.Left,
             Parent = Holder,
         })
-
-        local DisplayLabel = New("TextLabel", {
-            BackgroundTransparency = 1,
-            Size = UDim2.fromScale(1, 1),
-            Text = "",
-            TextSize = 14,
-            ZIndex = 2,
-            Parent = Bar,
-        })
-        New("UIStroke", {
-            ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual,
-            Color = "Dark",
-            LineJoinMode = Enum.LineJoinMode.Miter,
-            Parent = DisplayLabel,
-        })
-
-        local Fill = New("Frame", {
-            BackgroundColor3 = "AccentColor",
-            Size = UDim2.fromScale(0.5, 1),
-            Parent = Bar,
-
-            DPIExclude = {
-                Size = true,
-            },
-        })
-
-        function Slider:UpdateColors()
-            if Library.Unloaded then
-                return
-            end
-
-            if SliderLabel then
-                SliderLabel.TextTransparency = Slider.Disabled and 0.8 or 0
-            end
-            DisplayLabel.TextTransparency = Slider.Disabled and 0.8 or 0
-
-            Fill.BackgroundColor3 = Slider.Disabled and Library.Scheme.OutlineColor or Library.Scheme.AccentColor
-            Library.Registry[Fill].BackgroundColor3 = Slider.Disabled and "OutlineColor" or "AccentColor"
-        end
-
-        function Slider:Display()
-            if Library.Unloaded then
-                return
-            end
-
-            if Info.Compact then
-                DisplayLabel.Text = string.format("%s: %s%s%s", Slider.Text, Slider.Prefix, Slider.Value, Slider.Suffix)
-            elseif Info.HideMax then
-                DisplayLabel.Text = string.format("%s%s%s", Slider.Prefix, Slider.Value, Slider.Suffix)
-            else
-                DisplayLabel.Text = string.format(
-                    "%s%s%s/%s%s%s",
-                    Slider.Prefix,
-                    Slider.Value,
-                    Slider.Suffix,
-                    Slider.Prefix,
-                    Slider.Max,
-                    Slider.Suffix
-                )
-            end
-
-            local X = (Slider.Value - Slider.Min) / (Slider.Max - Slider.Min)
-            Fill.Size = UDim2.fromScale(X, 1)
-        end
-
-        function Slider:OnChanged(Func)
-            Slider.Changed = Func
-        end
-
-        local function Round(Value)
-            if Info.Rounding == 0 then
-                return math.floor(Value)
-            end
-
-            return tonumber(string.format("%." .. Info.Rounding .. "f", Value))
-        end
-
-        function Slider:SetMax(Value)
-            assert(Value > Slider.Min, "Max value cannot be less than the current min value.")
-
-            Slider.Value = math.clamp(Slider.Value, Slider.Min, Value)
-            Slider.Max = Value
-            Slider:Display()
-        end
-
-        function Slider:SetMin(Value)
-            assert(Value < Slider.Max, "Min value cannot be greater than the current max value.")
-
-            Slider.Value = math.clamp(Slider.Value, Value, Slider.Max)
-            Slider.Min = Value
-            Slider:Display()
-        end
-
-        function Slider:SetValue(Str)
-            if Slider.Disabled then
-                return
-            end
-
-            local Num = tonumber(Str)
-            if not Num then
-                return
-            end
-
-            Num = math.clamp(Num, Slider.Min, Slider.Max)
-
-            Slider.Value = Num
-            Slider:Display()
-
-            Library:SafeCallback(Slider.Callback, Slider.Value)
-            Library:SafeCallback(Slider.Changed, Slider.Value)
-        end
-
-        function Slider:SetDisabled(Disabled: boolean)
-            Slider.Disabled = Disabled
-
-            if Slider.TooltipTable then
-                Slider.TooltipTable.Disabled = Slider.Disabled
-            end
-
-            Bar.Active = not Slider.Disabled
-            Slider:UpdateColors()
-        end
-
-        function Slider:SetVisible(Visible: boolean)
-            Slider.Visible = Visible
-
-            Holder.Visible = Slider.Visible
-            Groupbox:Resize()
-        end
-
-        function Slider:SetText(Text: string)
-            Slider.Text = Text
-            if SliderLabel then
-                SliderLabel.Text = Text
-                return
-            end
-            Slider:Display()
-        end
-
-        function Slider:SetPrefix(Prefix: string)
-            Slider.Prefix = Prefix
-            Slider:Display()
-        end
-
-        function Slider:SetSuffix(Suffix: string)
-            Slider.Suffix = Suffix
-            Slider:Display()
-        end
-
-        Bar.MouseButton1Down:Connect(function()
-            if Slider.Disabled then
-                return
-            end
-
-            for _, Side in pairs(Library.ActiveTab.Sides) do
-                Side.ScrollingEnabled = false
-            end
-
-            while UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1 or Enum.UserInputType.Touch) do
-                local Location = Mouse.X
-                local Scale = math.clamp((Location - Bar.AbsolutePosition.X) / Bar.AbsoluteSize.X, 0, 1)
-
-                local OldValue = Slider.Value
-                Slider.Value = Round(Slider.Min + ((Slider.Max - Slider.Min) * Scale))
-
-                Slider:Display()
-                if Slider.Value ~= OldValue then
-                    Library:SafeCallback(Slider.Callback, Slider.Value)
-                    Library:SafeCallback(Slider.Changed, Slider.Value)
-                end
-
-                RunService.RenderStepped:Wait()
-            end
-
-            for _, Side in pairs(Library.ActiveTab.Sides) do
-                Side.ScrollingEnabled = true
-            end
-        end)
-
-        if typeof(Slider.Tooltip) == "string" or typeof(Slider.DisabledTooltip) == "string" then
-            Slider.TooltipTable = Library:AddTooltip(Slider.Tooltip, Slider.DisabledTooltip, Bar)
-            Slider.TooltipTable.Disabled = Slider.Disabled
-        end
-
-        Slider:UpdateColors()
-        Slider:Display()
-        Groupbox:Resize()
-
-        Slider.Holder = Holder
-        table.insert(Groupbox.Elements, Slider)
-
-        Options[Idx] = Slider
-
-        return Slider
     end
 
+    local Bar = New("TextButton", {
+        Active = not Slider.Disabled,
+        AnchorPoint = Vector2.new(0, 1),
+        BackgroundColor3 = "MainColor",
+        BorderColor3 = "OutlineColor",
+        BorderSizePixel = 1,
+        Position = UDim2.fromScale(0, 1),
+        Size = UDim2.new(1, 0, 0, 13),
+        Text = "",
+        Parent = Holder,
+    })
+
+    New("UICorner", {
+        CornerRadius = UDim.new(1, 0),
+        Parent = Bar,
+    })
+
+    local DisplayLabel = New("TextLabel", {
+        BackgroundTransparency = 1,
+        Size = UDim2.fromScale(1, 1),
+        Text = "",
+        TextSize = 14,
+        ZIndex = 2,
+        Parent = Bar,
+    })
+
+    New("UIStroke", {
+        ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual,
+        Color = "Dark",
+        LineJoinMode = Enum.LineJoinMode.Miter,
+        Parent = DisplayLabel,
+    })
+
+    local Fill = New("Frame", {
+        BackgroundColor3 = "AccentColor",
+        Size = UDim2.fromScale(0, 1),
+        Parent = Bar,
+        ZIndex = 1,
+
+        DPIExclude = {
+            Size = true,
+        },
+    })
+
+    New("UICorner", {
+        CornerRadius = UDim.new(1, 0),
+        Parent = Fill,
+    })
+
+    -- White thumb circle
+    local Thumb = New("Frame", {
+        AnchorPoint = Vector2.new(0.5, 0.5),
+        BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+        Size = UDim2.fromOffset(10, 10),
+        Position = UDim2.fromScale(0, 0.5),
+        ZIndex = 3,
+        Parent = Bar,
+    })
+
+    New("UICorner", {
+        CornerRadius = UDim.new(1, 0),
+        Parent = Thumb,
+    })
+
+    New("UIStroke", {
+        Color = "OutlineColor",
+        Thickness = 1,
+        Parent = Thumb,
+    })
+
+    function Slider:UpdateColors()
+        if Library.Unloaded then
+            return
+        end
+
+        if SliderLabel then
+            SliderLabel.TextTransparency = Slider.Disabled and 0.8 or 0
+        end
+        DisplayLabel.TextTransparency = Slider.Disabled and 0.8 or 0
+
+        Fill.BackgroundColor3 = Slider.Disabled and Library.Scheme.OutlineColor or Library.Scheme.AccentColor
+        Library.Registry[Fill].BackgroundColor3 = Slider.Disabled and "OutlineColor" or "AccentColor"
+    end
+
+    function Slider:Display()
+        if Library.Unloaded then
+            return
+        end
+
+        if Info.Compact then
+            DisplayLabel.Text = string.format("%s: %s%s%s", Slider.Text, Slider.Prefix, Slider.Value, Slider.Suffix)
+        elseif Info.HideMax then
+            DisplayLabel.Text = string.format("%s%s%s", Slider.Prefix, Slider.Value, Slider.Suffix)
+        else
+            DisplayLabel.Text = string.format(
+                "%s%s%s/%s%s%s",
+                Slider.Prefix,
+                Slider.Value,
+                Slider.Suffix,
+                Slider.Prefix,
+                Slider.Max,
+                Slider.Suffix
+            )
+        end
+
+        local X = (Slider.Value - Slider.Min) / (Slider.Max - Slider.Min)
+        Fill.Size = UDim2.fromScale(X, 1)
+        Thumb.Position = UDim2.fromScale(X, 0.5)
+    end
+
+    function Slider:OnChanged(Func)
+        Slider.Changed = Func
+    end
+
+    local function Round(Value)
+        if Info.Rounding == 0 then
+            return math.floor(Value)
+        end
+        return tonumber(string.format("%." .. Info.Rounding .. "f", Value))
+    end
+
+    function Slider:SetValue(Str)
+        if Slider.Disabled then
+            return
+        end
+
+        local Num = tonumber(Str)
+        if not Num then
+            return
+        end
+
+        Num = math.clamp(Num, Slider.Min, Slider.Max)
+        Slider.Value = Num
+
+        Slider:Display()
+        Library:SafeCallback(Slider.Callback, Slider.Value)
+        Library:SafeCallback(Slider.Changed, Slider.Value)
+    end
+
+    Bar.MouseButton1Down:Connect(function()
+        if Slider.Disabled then
+            return
+        end
+
+        for _, Side in pairs(Library.ActiveTab.Sides) do
+            Side.ScrollingEnabled = false
+        end
+
+        while UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) do
+            local Location = Mouse.X
+            local Scale = math.clamp((Location - Bar.AbsolutePosition.X) / Bar.AbsoluteSize.X, 0, 1)
+
+            local OldValue = Slider.Value
+            Slider.Value = Round(Slider.Min + ((Slider.Max - Slider.Min) * Scale))
+
+            Slider:Display()
+
+            if Slider.Value ~= OldValue then
+                Library:SafeCallback(Slider.Callback, Slider.Value)
+                Library:SafeCallback(Slider.Changed, Slider.Value)
+            end
+
+            RunService.RenderStepped:Wait()
+        end
+
+        for _, Side in pairs(Library.ActiveTab.Sides) do
+            Side.ScrollingEnabled = true
+        end
+    end)
+
+    if typeof(Slider.Tooltip) == "string" or typeof(Slider.DisabledTooltip) == "string" then
+        Slider.TooltipTable = Library:AddTooltip(Slider.Tooltip, Slider.DisabledTooltip, Bar)
+        Slider.TooltipTable.Disabled = Slider.Disabled
+    end
+
+    Slider:UpdateColors()
+    Slider:Display()
+    Groupbox:Resize()
+
+    Slider.Holder = Holder
+    table.insert(Groupbox.Elements, Slider)
+    Options[Idx] = Slider
+
+    return Slider
+end
+
+   
     function Funcs:AddDropdown(Idx, Info)
         Info = Library:Validate(Info, Templates.Dropdown)
 
