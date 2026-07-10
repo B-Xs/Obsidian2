@@ -337,7 +337,11 @@ local Templates = {
         CornerRadius = 4,
         NotifySide = "Right",
         ShowCustomCursor = true,
-        Font = Enum.Font.Code,
+        Font = Font.new(
+    getcustomasset("Tahoma.font"),
+    Enum.FontWeight.Regular,
+    Enum.FontStyle.Normal
+),
         ToggleKeybind = Enum.KeyCode.RightControl,
 
         ShowMobileButtons = true,
