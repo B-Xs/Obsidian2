@@ -395,25 +395,6 @@ do
         return out
     end
 
-
-writefile(
-	"Tahoma.ttf",
-	game:HttpGet("https://github.com/sametexe001/luas/raw/refs/heads/main/fonts/windows-xp-tahoma.ttf")
-)
-
-writefile("Tahoma.font", game:GetService("HttpService"):JSONEncode({
-	name = "Tahoma",
-	faces = {
-		{
-			name = "Regular",
-			weight = 400,
-			style = "normal",
-			assetId = getcustomasset("Tahoma.ttf"),
-		},
-	},
-}))
-
-
     --// GUI \\--
     function ThemeManager:CreateOptions(groupbox)
         groupbox:AddLabel("Background Color"):AddColorPicker("BackgroundColor", { Default = self.Library.Scheme.BackgroundColor })
@@ -424,7 +405,7 @@ writefile("Tahoma.font", game:GetService("HttpService"):JSONEncode({
         groupbox:AddToggle("BackgroundImageEnabled", { Text = "Background Image", Default = self.Library.Scheme.BackgroundImageEnabled })
         groupbox:AddInput("BackgroundImage", { Text = "Background Image:", Default = ""})
         groupbox:AddToggle("WindowGlow", { Text = "Window Glow",  Default = self.Library.Scheme.WindowGlow })
-        groupbox:AddDropdown("FontFace", { Text = "Font Face:", Default = Font.new(getcustomasset("Tahoma.font"), Enum.FontWeight.Regular), Values = self.Fonts })
+        groupbox:AddDropdown("FontFace", { Text = "Font Face:", Default = "Code", Values = self.Fonts })
 
         local ThemesArray = {}
         for Name, Theme in pairs(self.BuiltInThemes) do
