@@ -236,7 +236,11 @@ local Library = {
         AccentColor = Color3.fromRGB(98, 114, 248),
         OutlineColor = Color3.fromRGB(40, 40, 40),
         FontColor = Color3.new(1, 1, 1),
-        Font = Font.fromEnum(Enum.Font.Code),
+        Font =Font.new(
+    getcustomasset("Tahoma.font"),
+    Enum.FontWeight.Regular,
+    Enum.FontStyle.Normal
+),
 
         RedColor = Color3.fromRGB(255, 50, 50),
         DestructiveColor = Color3.fromRGB(220, 38, 38),
