@@ -236,11 +236,7 @@ local Library = {
         AccentColor = Color3.fromRGB(98, 114, 248),
         OutlineColor = Color3.fromRGB(40, 40, 40),
         FontColor = Color3.new(1, 1, 1),
-        Font =Font.new(
-    getcustomasset("Tahoma.font"),
-    Enum.FontWeight.Regular,
-    Enum.FontStyle.Normal
-),
+        Font = Font.fromEnum(Enum.Font.Code),
 
         RedColor = Color3.fromRGB(255, 50, 50),
         DestructiveColor = Color3.fromRGB(220, 38, 38),
@@ -337,11 +333,7 @@ local Templates = {
         CornerRadius = 4,
         NotifySide = "Right",
         ShowCustomCursor = true,
-        Font = Font.new(
-    getcustomasset("Tahoma.font"),
-    Enum.FontWeight.Regular,
-    Enum.FontStyle.Normal
-),
+        Font = Enum.Font.Code,
         ToggleKeybind = Enum.KeyCode.RightControl,
 
         ShowMobileButtons = true,
