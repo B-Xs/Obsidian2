@@ -199,6 +199,7 @@ local Library = {
     KeybindFrame = nil,
     KeybindContainer = nil,
     KeybindToggles = {},
+    CustomKeybinds = true,
 
     --// Notifications \\--
     Notifications = {},
@@ -5173,6 +5174,9 @@ do
         end))
 
         table.insert(Toggle.Connections, Button.MouseButton2Click:Connect(function()
+            if not Library.CustomKeybinds then
+                return
+            end
             local KeyPicker = nil
             for _, Addon in Toggle.Addons do
                 if Addon.Type == "KeyPicker" then
@@ -5466,6 +5470,9 @@ do
         end))
 
         table.insert(Toggle.Connections, Button.MouseButton2Click:Connect(function()
+            if not Library.CustomKeybinds then
+                return
+            end
             local KeyPicker = nil
             for _, Addon in Toggle.Addons do
                 if Addon.Type == "KeyPicker" then
@@ -10633,12 +10640,12 @@ function Library:CreateWindow(WindowInfo)
             local Info = select(1, ...)
             Name = Info.Name or "Code Editor"
             Icon = Info.Icon or "code"
-            Description = Info.Description or "I am amazing"
+            Description = Info.Description or "Integrated Luau script editor."
             Options = Info
         else
             Name = select(1, ...) or "Code Editor"
             Icon = select(2, ...) or "code"
-            Description = select(3, ...) or "I am amazing"
+            Description = select(3, ...) or "Integrated Luau script editor."
             Options = select(4, ...) or {}
         end
 
@@ -10764,7 +10771,7 @@ function Library:CreateWindow(WindowInfo)
         })
 
         local IDE = nil
-        local DefaultScript = Options.DefaultText or "-- Olympia > All\n"
+        local DefaultScript = Options.DefaultText or "-- Integrated Code Editor\nprint('Editor loaded!')\n"
 
         task.spawn(function()
             local success, IDEModule = pcall(function()
