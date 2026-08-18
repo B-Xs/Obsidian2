@@ -172,52 +172,52 @@ local Library = {
     LocalPlayer = LocalPlayer,
     IsRobloxFocused = true,
 
-    --// Device \\--
+    
     DevicePlatform = nil,
     IsMobile = false,
 
-    --// Obsidian Windows \\--
+    
     ScreenGui = nil,
     Window = nil,
     WindowContainer = nil,
 
-    --// Search \\--
+    
     SearchText = "",
     Searching = false,
     GlobalSearch = false,
     LastSearchTab = nil,
 
-    --// Tabs \\--
+    
     ActiveTab = nil,
     Tabs = {},
     TabButtons = {},
 
-    --// Dependency Boxes \\--
+    
     DependencyBoxes = {},
 
-    --// Keybinds Frame \\--
+    
     KeybindFrame = nil,
     KeybindContainer = nil,
     KeybindToggles = {},
     CustomKeybinds = true,
 
-    --// Notifications \\--
+    
     Notifications = {},
     NotifySide = "Right",
     NotifyTweenInfo = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
 
-    --// Dialogues \\--
+    
     Dialogues = {},
     ActiveDialog = nil,
 
-    --// Loading Window \\--
+    
     ActiveLoading = nil,
 
-    --// Corners \\--
+    
     Corners = {},
     SpecificCorners = {},
 
-    --// Animations \\--
+    
     TweenInfo = TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
 
     TabTransitionInfo = TweenInfo.new(0.22, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -239,7 +239,7 @@ local Library = {
         KeyPicker = false
     },
 
-    --// States \\--
+    
     Toggled = false,
     Unloaded = false,
 
@@ -248,7 +248,7 @@ local Library = {
     Toggles = Toggles,
     Options = Options,
 
-    --// Options \\--
+    
     ToggleKeybind = Enum.KeyCode.RightControl,
     ShowToggleFrameInKeybinds = true,
 
@@ -259,7 +259,7 @@ local Library = {
     CantDragForced = false,
     DraggableElements = {},
 
-    --// Signals \\--
+    
     Signals = {},
     UnloadSignals = {},
 
@@ -268,7 +268,7 @@ local Library = {
     DPIScale = 1,
     CornerRadius = 10,
 
-    --// Scheme \\--
+    
     IsLightTheme = false,
     Scheme = {
         BackgroundColor = Color3.fromRGB(15, 15, 15),
@@ -288,16 +288,16 @@ local Library = {
         WindowGlow = true,
     },
 
-    --// Registry \\--
+    
     Registry = {},
 	Scales = {},
 	ScalesOffset = {},
 
-    --// Misc \\--
+    
     ImageManager = CustomImageManager,
     ShowCursorBinding = string.sub(tostring({}), 10),
 
-    Notify = nil, Toggle = nil -- we love luau lsp
+    Notify = nil, Toggle = nil 
 }
 
 if RunService:IsStudio() then
@@ -318,7 +318,7 @@ else
 end
 
 local Templates = {
-    --// UI \\--
+    
     Frame = {
         BorderSizePixel = 0,
     },
@@ -363,7 +363,7 @@ local Templates = {
         ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
     },
 
-    --// Library \\--
+    
     Window = {
         Title = "No Title",
         Footer = "No Footer",
@@ -397,15 +397,15 @@ local Templates = {
         SidebarCompacted = true,
         MinContainerWidth = 256,
 
-        --// Snapping \\--
+        
         MinSidebarWidth = 128,
         SidebarCompactWidth = 48,
         SidebarCollapseThreshold = 0.5,
 
-        --// Dragging \\--
+        
         CompactWidthActivation = 128,
 
-        --// Background \\--
+        
         BackgroundImageEnabled = false,
         BackgroundImage = ""
     },
@@ -533,7 +533,7 @@ local Templates = {
         Visible = true,
     },
 
-    --// Addons \\-
+    
     KeyPicker = {
         Text = "KeyPicker",
 
@@ -571,7 +571,7 @@ local Sizes = {
     Right = { 0.5, 1 },
 }
 
---// Scheme Functions \\--
+
 local SchemeReplaceAlias = {
     RedColor = "Red",
     WhiteColor = "White",
@@ -606,7 +606,7 @@ local function GetSchemeValue(Index)
     return Library.Scheme[Index]
 end
 
---// Basic Functions \\--
+
 local function WaitForEvent(Event, Timeout, Condition)
     local Bindable = Instance.new("BindableEvent")
     local Connection = Event:Once(function(...)
@@ -735,10 +735,10 @@ local function CheckDepbox(Box, Search)
             ElementInfo.Holder.Visible = false
             continue
         elseif ElementInfo.SubButton then
-            --// Check if any of the Buttons Name matches with Search
+            
             local Visible = false
 
-            --// Check if Search matches Element's Name and if Element is Visible
+            
             if ElementInfo.Text:lower():match(Search) and ElementInfo.Visible then
                 Visible = true
             else
@@ -757,7 +757,7 @@ local function CheckDepbox(Box, Search)
             continue
         end
 
-        --// Check if Search matches Element's Name and if Element is Visible
+        
         if ElementInfo.Text and ElementInfo.Text:lower():match(Search) and ElementInfo.Visible then
             ElementInfo.Holder.Visible = true
             VisibleElements += 1
@@ -806,7 +806,7 @@ local function ApplySearchToTab(Tab, Search)
 
     local HasVisible = false
 
-    --// Loop through Groupboxes to get Elements Info
+    
     for _, Groupbox in Tab.Groupboxes do
         if Groupbox.Visible == false then
             continue
@@ -818,10 +818,10 @@ local function ApplySearchToTab(Tab, Search)
                 ElementInfo.Holder.Visible = false
                 continue
             elseif ElementInfo.SubButton then
-                --// Check if any of the Buttons Name matches with Search
+                
                 local Visible = false
 
-                --// Check if Search matches Element's Name and if Element is Visible
+                
                 if ElementInfo.Text:lower():match(Search) and ElementInfo.Visible then
                     Visible = true
                 else
@@ -841,7 +841,7 @@ local function ApplySearchToTab(Tab, Search)
                 continue
             end
 
-            --// Check if Search matches Element's Name and if Element is Visible
+            
             if ElementInfo.Text and ElementInfo.Text:lower():match(Search) and ElementInfo.Visible then
                 ElementInfo.Holder.Visible = true
                 VisibleElements += 1
@@ -858,7 +858,7 @@ local function ApplySearchToTab(Tab, Search)
             VisibleElements += CheckDepbox(Depbox, Search)
         end
 
-        --// Update Groupbox Size and Visibility if found any element
+        
         if VisibleElements > 0 then
             Groupbox:Resize()
             HasVisible = true
@@ -878,10 +878,10 @@ local function ApplySearchToTab(Tab, Search)
                     ElementInfo.Holder.Visible = false
                     continue
                 elseif ElementInfo.SubButton then
-                    --// Check if any of the Buttons Name matches with Search
+                    
                     local Visible = false
 
-                    --// Check if Search matches Element's Name and if Element is Visible
+                    
                     if ElementInfo.Text:lower():match(Search) and ElementInfo.Visible then
                         Visible = true
                     else
@@ -900,7 +900,7 @@ local function ApplySearchToTab(Tab, Search)
                     continue
                 end
 
-                --// Check if Search matches Element's Name and if Element is Visible
+                
                 if ElementInfo.Text and ElementInfo.Text:lower():match(Search) and ElementInfo.Visible then
                     ElementInfo.Holder.Visible = true
                     VisibleElements[SubTab] += 1
@@ -932,7 +932,7 @@ local function ApplySearchToTab(Tab, Search)
             end
         end
 
-        --// Update Tabbox Visibility if any visible
+        
         Tabbox.BoxHolder.Visible = VisibleTabs > 0
     end
 
@@ -1220,7 +1220,7 @@ function Library:Validate(Table: { [string]: any }, Template: { [string]: any })
     return Table
 end
 
---// Creator Functions \\--
+
 local function FillInstance(Table: { [string]: any }, Instance: GuiObject)
     local ThemeProperties = Library.Registry[Instance] or {}
 
@@ -1261,8 +1261,8 @@ local function New(ClassName: string, Properties: { [string]: any }): any
     return Instance
 end
 
---// Main Instances \\-
-local function SafeParentUI(Instance: Instance, Parent: Instance | () -> Instance)
+
+local function SafeParentUI(Instance: Instance, Parent: Instance | (() -> Instance))
     local success, _error = pcall(function()
         if not Parent then
             Parent = CoreGui
@@ -1316,7 +1316,7 @@ local ModalElement = New("TextButton", {
     Parent = ScreenGui,
 })
 
---// Cursor
+
 local Cursor, CursorCustomImage
 do
     Cursor = New("Frame", {
@@ -1364,7 +1364,7 @@ do
     })
 end
 
---// Notification \\--
+
 local NotificationArea
 local NotifyOrder = {}
 do
@@ -1383,7 +1383,7 @@ do
     )
 end
 
---// Lib Functions \\--
+
 function Library:ResetCursorIcon()
     CursorCustomImage.Visible = false
     CursorCustomImage.Size = UDim2.fromOffset(20, 20)
@@ -1649,7 +1649,7 @@ function Library:MakeDraggable(UI: GuiObject, DragFrame: GuiObject, IgnoreToggle
     end)
 end
 
-function Library:MakeResizable(UI: GuiObject, DragFrame: GuiObject, Callback: () -> ()?)
+function Library:MakeResizable(UI: GuiObject, DragFrame: GuiObject, Callback: (() -> ())?)
     local StartPos
     local FrameSize
     local Dragging = false
@@ -1784,7 +1784,7 @@ function Library:AddBlank(Frame: GuiObject, Size: UDim2)
     })
 end
 
---// Animations \\--
+
 local TransparencyCache = {}
 local ActiveTabTweens = setmetatable({}, { __mode = "k" })
 
@@ -1829,7 +1829,7 @@ function Library:PlayTabAnimation(TabCanvas: CanvasGroup, Showing: boolean, OnCo
             StartPosition = UDim2.fromOffset(0, -Offset)
         elseif SwipeFrom == "right" then
             StartPosition = UDim2.fromOffset(Offset, 0)
-        else -- bottom (Default)
+        else 
             StartPosition = UDim2.fromOffset(0, Offset)
         end
 
@@ -1876,7 +1876,7 @@ function Library:PlayTabAnimation(TabCanvas: CanvasGroup, Showing: boolean, OnCo
     end
 end
 
---// Deprecated \\--
+
 function Library:MakeOutline(Frame: GuiObject, Corner: number?, ZIndex: number?)
     warn("Obsidian:MakeOutline is deprecated, please use Obsidian:AddOutline instead.")
     local Holder = New("Frame", {
@@ -2364,7 +2364,7 @@ function Library:AddDraggableImageButton(...)
     return DraggableImageButton
 end
 
---// Watermark - Deprecated \\--
+
 do
     local WatermarkLabel = Library:AddDraggableLabel("")
     WatermarkLabel:SetVisible(false)
@@ -2380,14 +2380,14 @@ do
     end
 end
 
---// Context Menu \\--
+
 local CurrentMenu
 function Library:AddContextMenu(
     Holder: GuiObject,
-    Size: UDim2 | () -> (),
-    Offset: { [number]: number } | () -> {},
+    Size: UDim2 | (() -> ()),
+    Offset: { [number]: number } | (() -> {}),
     List: number?,
-    ActiveCallback: (Active: boolean) -> ()?,
+    ActiveCallback: ((Active: boolean) -> ())?,
     AnimationType: ("Dropdown" | "KeyPicker" | "none")?
 )
     local Menu
@@ -2670,7 +2670,7 @@ Library:GiveSignal(UserInputService.InputBegan:Connect(function(Input: InputObje
     end
 end))
 
---// Tooltip \\--
+
 local TooltipLabel = New("TextLabel", {
     AutomaticSize = Enum.AutomaticSize.Y,
     BackgroundColor3 = "BackgroundColor",
@@ -2815,7 +2815,7 @@ function Library:SetIconModule(module: IconModule)
     FetchIcons = true
     Icons = module
 
-    -- Top ten fixes 🚀
+    
     CheckIcon = Library:GetIcon("check")
     ArrowIcon = Library:GetIcon("chevron-up")
     ResizeIcon = Library:GetIcon("move-diagonal-2")
@@ -2846,9 +2846,9 @@ do
             Connections = {},
 
             Text = Info.Text,
-            Value = Info.Default, -- Key
-            Modifiers = Info.DefaultModifiers, -- Modifiers
-            DisplayValue = Info.Default, -- Picker Text
+            Value = Info.Default, 
+            Modifiers = Info.DefaultModifiers, 
+            DisplayValue = Info.Default, 
 
             Blacklisted = Info.Blacklisted,
             BlacklistedModifiers = Info.BlacklistedModifiers,
@@ -2886,7 +2886,7 @@ do
         local Picking = false
         local IsForButton = ParentObj.Type == "Button" or ParentObj.Type == "SubButton"
 
-        -- Special Keys
+        
         local SpecialKeys = {
             ["MB1"] = Enum.UserInputType.MouseButton1,
             ["MB2"] = Enum.UserInputType.MouseButton2,
@@ -2899,7 +2899,7 @@ do
             [Enum.UserInputType.MouseButton3] = "MB3",
         }
 
-        -- Modifiers
+        
         local Modifiers = {
             ["LAlt"] = Enum.KeyCode.LeftAlt,
             ["RAlt"] = Enum.KeyCode.RightAlt,
@@ -3172,7 +3172,7 @@ do
                 Checkbox.Visible = not Normal
             end
 
-            KeyPicker.DoClick = function(...) end --// make luau lsp shut up
+            KeyPicker.DoClick = function(...) end 
             Holder.MouseButton1Click:Connect(function()
                 if KeybindsToggle.Normal then
                     return
@@ -3518,7 +3518,7 @@ do
                 Picker.Size = IsForButton and UDim2.new(0, 29, 1, 0) or UDim2.fromOffset(29, 18)
             end
 
-            -- Wait for any input --
+            
             local ActiveModifiers = {}
             local CurrentInput = nil
 
@@ -3562,7 +3562,7 @@ do
                 return true
             end
 
-            -- Wait for the first valid InputBegan --
+            
             while true do
                 local InputObj = UserInputService.InputBegan:Wait()
                 if UserInputService:GetFocusedTextBox() ~= nil then
@@ -3576,13 +3576,13 @@ do
                 end
             end
 
-            -- If it's a modifier key, we wait for either its release or another input --
+            
             while IsModifierInput(CurrentInput) do
                 if CurrentInput.KeyCode == Enum.KeyCode.Escape then
                     break
                 end
 
-                -- Display the current state including the current modifier key --
+                
                 local ModName = ModifiersInput[CurrentInput.KeyCode]
                 if ModName then
                     local text = if #ActiveModifiers > 0 then table.concat(ActiveModifiers, " + ") .. " + " .. ModName .. " + ..." else ModName .. " + ..."
@@ -3623,9 +3623,9 @@ do
                 end
 
                 if Released then
-                    break -- Use modifier key as bind
+                    break 
                 elseif NextInput then
-                    -- Add another modifier or continue to normal key
+                    
                     local OldModName = ModifiersInput[CurrentInput.KeyCode]
                     if OldModName and not table.find(ActiveModifiers, OldModName) then
                         ActiveModifiers[#ActiveModifiers + 1] = OldModName
@@ -3837,7 +3837,7 @@ do
             Parent = Holder,
         })
 
-        --// Color Menu \\--
+        
         local ColorMenu = Library:AddContextMenu(
             Holder,
             UDim2.fromOffset(Info.Transparency and 256 or 234, 0),
@@ -3878,7 +3878,7 @@ do
             Parent = ColorHolder,
         })
 
-        --// Sat Map
+        
         local SatVipMap = New("ImageButton", {
             BackgroundColor3 = ColorPicker.Value,
             Image = CustomImageManager.GetAsset("SaturationMap"),
@@ -3901,7 +3901,7 @@ do
             Parent = SatVibCursor,
         })
 
-        --// Hue
+        
         local HueSelector = New("TextButton", {
             Size = UDim2.fromOffset(16, 200),
             Text = "",
@@ -3923,7 +3923,7 @@ do
             Parent = HueSelector,
         })
 
-        --// Alpha
+        
         local TransparencySelector, TransparencyColor, TransparencyCursor
         if Info.Transparency then
             TransparencySelector = New("ImageButton", {
@@ -3999,7 +3999,7 @@ do
             Parent = RgbBox,
         })
 
-        --// Rainbow Mode Toggle Row \\--
+        
         ColorPicker.Rainbow = false
         local RainbowHolder = New("TextButton", {
             BackgroundTransparency = 1,
@@ -4062,7 +4062,7 @@ do
             ColorPicker:SetRainbow(not ColorPicker.Rainbow)
         end)
 
-        --// Context Menu \\--
+        
         local ContextMenu = Library:AddContextMenu(Holder, UDim2.fromOffset(93, 0), function()
             return { Holder.AbsoluteSize.X + 1.5, 0.5 }
         end, 1)
@@ -4088,7 +4088,7 @@ do
                 Library.CopiedColor = { ColorPicker.Value, ColorPicker.Transparency }
             end)
 
-            ColorPicker.SetValueRGB = function(...) end --// make luau lsp shut up
+            ColorPicker.SetValueRGB = function(...) end 
             CreateButton("Paste color", function()
                 ColorPicker:SetValueRGB(Library.CopiedColor[1], Library.CopiedColor[2], Library.CopiedColor[3])
             end)
@@ -4112,7 +4112,7 @@ do
             end
         end
 
-        --// End \\--
+        
         function ColorPicker:SetHSVFromRGB(Color)
             ColorPicker.Hue, ColorPicker.Sat, ColorPicker.Vib = Color:ToHSV()
         end
@@ -4756,7 +4756,7 @@ do
                         Library:SafeCallback(Button.Func)
                     end
 
-                    RunService.RenderStepped:Wait() --// Mouse Button fires without waiting (i hate roblox)
+                    RunService.RenderStepped:Wait() 
                     Button.Locked = false
                     return
                 end
@@ -7265,7 +7265,7 @@ do
             for i = 1, #Defaults do
                 local Index = Defaults[i]
                 if Info.Multi then
-                    Dropdown.Value[Dropdown.Values[Index]] = true
+                    Dropdown.Value[Dropdown.Values[Index] ] = true
                 else
                     Dropdown.Value = Dropdown.Values[Index]
                 end
@@ -8789,7 +8789,7 @@ function Library:CreateWindow(WindowInfo)
     end
     WindowInfo.CornerRadius = math.min(WindowInfo.CornerRadius, 20)
     
-    --// Old Naming \\--
+    
     if WindowInfo.Compact ~= nil then
         WindowInfo.SidebarCompacted = WindowInfo.Compact
     end
@@ -8924,7 +8924,7 @@ function Library:CreateWindow(WindowInfo)
             MainFrame.Position = UDim2.new(0.5, -MainFrame.Size.X.Offset / 2, 0.5, -MainFrame.Size.Y.Offset / 2)
         end
 
-        --// Top Bar \\-
+        
         TopBar = New("Frame", {
             BackgroundTransparency = 1,
             Size = UDim2.new(1, 0, 0, 48),
@@ -8932,7 +8932,7 @@ function Library:CreateWindow(WindowInfo)
         })
         Library:MakeDraggable(MainFrame, TopBar, false, true)
 
-        --// Title \\--
+        
         TitleHolder = New("Frame", {
             BackgroundTransparency = 1,
             Size = UDim2.new(0, InitialLeftWidth, 1, 0),
@@ -8980,7 +8980,7 @@ function Library:CreateWindow(WindowInfo)
             Parent = TitleHolder,
         })
 
-        --// Top Right Bar \\--
+        
         RightWrapper = New("Frame", {
             AnchorPoint = Vector2.new(1, 0.5),
             BackgroundTransparency = 1,
@@ -9096,7 +9096,7 @@ function Library:CreateWindow(WindowInfo)
             })
         end
 
-        --// Bottom Bar \\--
+        
         BottomBackground = New("Frame", {
             AnchorPoint = Vector2.new(0, 1),
             BackgroundColor3 = function()
@@ -9127,7 +9127,7 @@ function Library:CreateWindow(WindowInfo)
             })
         )
 
-        --// Footer \\-
+        
         FooterLabel = New("TextLabel", {
             BackgroundTransparency = 1,
             Size = UDim2.fromScale(1, 1),
@@ -9137,7 +9137,7 @@ function Library:CreateWindow(WindowInfo)
             Parent = BottomBar,
         })
 
-        --// Resize Button \\--
+        
         if WindowInfo.Resizable then
             ResizeButton = New("TextButton", {
                 AnchorPoint = Vector2.new(1, 0),
@@ -9167,7 +9167,7 @@ function Library:CreateWindow(WindowInfo)
             Parent = ResizeButton,
         })
 
-        --// Tabs \\--
+        
         Tabs = New("ScrollingFrame", {
             AutomaticCanvasSize = Enum.AutomaticSize.Y,
             BackgroundColor3 = "BackgroundColor",
@@ -9188,7 +9188,7 @@ function Library:CreateWindow(WindowInfo)
             Parent = Tabs,
         })
 
-        --// Container \\--
+        
         Container = New("Frame", {
             AnchorPoint = Vector2.new(1, 0),
             BackgroundColor3 = function()
@@ -9211,7 +9211,7 @@ function Library:CreateWindow(WindowInfo)
         Library.WindowContainer = Container
     end
 
-    --// Window Table \\--
+    
     local Window = {}
     local Fading = false
 
@@ -9547,7 +9547,7 @@ function Library:CreateWindow(WindowInfo)
                 Icon = TabIcon,
             })
 
-            --// Tab Canvas \\--
+            
             TabCanvas = New("CanvasGroup", {
                 BackgroundTransparency = 1,
                 ClipsDescendants = true,
@@ -9557,7 +9557,7 @@ function Library:CreateWindow(WindowInfo)
                 Parent = Container,
             })
 
-            --// Tab Container \\--
+            
             TabContainer = New("Frame", {
                 BackgroundTransparency = 1,
                 Position = UDim2.fromScale(0, 0),
@@ -9635,7 +9635,7 @@ function Library:CreateWindow(WindowInfo)
             end
         end
 
-        --// Warning Box \\--
+        
         local WarningBoxHolder = New("Frame", {
             AutomaticSize = Enum.AutomaticSize.Y,
             BackgroundTransparency = 1,
@@ -9722,7 +9722,7 @@ function Library:CreateWindow(WindowInfo)
             })
         end
 
-        --// Tab Table \\--
+        
         local Tab = {
             Description = Description,
 
@@ -10127,7 +10127,7 @@ function Library:CreateWindow(WindowInfo)
                     end
                 end
 
-                --// Execution \\--
+                
                 if not Tabbox.ActiveTab then
                     Tab:Show()
                 end
@@ -10608,7 +10608,7 @@ function Library:CreateWindow(WindowInfo)
             Library.Tabs[Name] = nil
         end
 
-        --// Execution \\--
+        
         if not Library.ActiveTab then
             Tab:Show()
         end
@@ -10640,12 +10640,12 @@ function Library:CreateWindow(WindowInfo)
             local Info = select(1, ...)
             Name = Info.Name or "Code Editor"
             Icon = Info.Icon or "code"
-            Description = Info.Description or "Integrated Luau script editor."
+            Description = Info.Description or "I am amazing"
             Options = Info
         else
             Name = select(1, ...) or "Code Editor"
             Icon = select(2, ...) or "code"
-            Description = select(3, ...) or "Integrated Luau script editor."
+            Description = select(3, ...) or "I am amazing"
             Options = select(4, ...) or {}
         end
 
@@ -10771,7 +10771,7 @@ function Library:CreateWindow(WindowInfo)
         })
 
         local IDE = nil
-        local DefaultScript = Options.DefaultText or "-- Integrated Code Editor\nprint('Editor loaded!')\n"
+        local DefaultScript = Options.DefaultText or "-- Olympia > All \nprint('Loaded!')\n"
 
         task.spawn(function()
             local success, IDEModule = pcall(function()
@@ -11010,7 +11010,7 @@ function Library:CreateWindow(WindowInfo)
                 Icon = TabIcon,
             })
 
-            --// Tab Canvas \\--
+           
             TabCanvas = New("CanvasGroup", {
                 BackgroundTransparency = 1,
                 ClipsDescendants = true,
@@ -11020,7 +11020,7 @@ function Library:CreateWindow(WindowInfo)
                 Parent = Container,
             })
 
-            --// Tab Container \\--
+            
             TabContainer = New("ScrollingFrame", {
                 AutomaticCanvasSize = Enum.AutomaticSize.Y,
                 BackgroundTransparency = 1,
@@ -11044,7 +11044,7 @@ function Library:CreateWindow(WindowInfo)
             })
         end
 
-        --// Tab Table \\--
+        
         local Tab = {
             Description = Description,
             IsKeyTab = true,
@@ -11216,7 +11216,7 @@ function Library:CreateWindow(WindowInfo)
             end
         end
 
-        --// Execution \\--
+        
         if not Library.ActiveTab then
             Tab:Show()
         end
@@ -11969,7 +11969,7 @@ function Library:CreateWindow(WindowInfo)
         end
     end
 
-    --// Execution \\--
+    
     SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
         Library:UpdateSearch(SearchBox.Text)
     end)
@@ -12025,7 +12025,7 @@ function Library:CreateLoading(LoadingInfo)
         SidebarWidth = LoadingInfo.SidebarWidth,
     }
 
-    --// ScreenGui \\--
+    
     local ScreenGui = New("ScreenGui", {
         Name = "ObsidianLoading",
         DisplayOrder = 999,
@@ -12038,7 +12038,7 @@ function Library:CreateLoading(LoadingInfo)
         Library:RemoveFromRegistry(Instance)
     end)
 
-    --// Main Frame \\--
+    
     local MainFrame = New("TextButton", {
         Name = "Main",
         AnchorPoint = Vector2.new(0.5, 0.5),
@@ -12062,7 +12062,7 @@ function Library:CreateLoading(LoadingInfo)
 	table.insert(Library.Scales, MainScale)
 	Library.ScalesOffset[MainScale] = Library.IsMobile and 0.2 or 0
 
-    --// Layout Containers \\--
+    
     local Container = New("Frame", {
         Name = "Content",
         BackgroundTransparency = 1,
@@ -12094,7 +12094,7 @@ function Library:CreateLoading(LoadingInfo)
         Parent = SideBar,
     })
 
-    --// Top Bar \\--
+    
     local TopBar = New("Frame", {
         Name = "TopBar",
         BackgroundTransparency = 1,
@@ -12160,7 +12160,7 @@ function Library:CreateLoading(LoadingInfo)
         Size = UDim2.new(1, 0, 0, 1),
     })
 
-    --// Loading Content Elements \\--
+    
     local InnerContent = New("Frame", {
         Name = "InnerContent",
         BackgroundTransparency = 1,
@@ -12229,7 +12229,7 @@ function Library:CreateLoading(LoadingInfo)
         Parent = InnerContent,
     })
 
-    --// Progress Bar \\--
+    
     local SliderBar = New("Frame", {
         BackgroundColor3 = "MainColor",
         Size = UDim2.new(0.7, 0, 0, 15),
@@ -12259,7 +12259,7 @@ function Library:CreateLoading(LoadingInfo)
         Parent = ProgressLabel,
     })
 
-    --// Sidebar Object \\--
+    
     local SidebarScrolling = New("ScrollingFrame", {
         BackgroundTransparency = 1,
         BorderSizePixel = 0,
@@ -12308,7 +12308,7 @@ function Library:CreateLoading(LoadingInfo)
     setmetatable(SidebarObject, BaseGroupbox)
     Loading.Sidebar = SidebarObject
 
-    --// Error Frame \\--
+    
     local ErrorFrame = New("Frame", {
         Name = "Error",
         BackgroundTransparency = 1,
@@ -12405,15 +12405,15 @@ function Library:CreateLoading(LoadingInfo)
         end
     end
 
-    --// Content Page \\--
+    
     function Loading:RecalculateLoadingHeight()
         if not Loading.AutoResizeHeight then
             return
         end
 
         local RequiredHeight = 
-              49 -- TopBar
-            + 48 -- Padding
+              49 
+            + 48 
             + InnerContent.UIListLayout.AbsoluteContentSize.Y
 
         Loading.WindowHeight = math.max(Loading.BaseWindowHeight, RequiredHeight)
@@ -12480,7 +12480,7 @@ function Library:CreateLoading(LoadingInfo)
         Loading:SetCurrentStep(Loading.CurrentStep)
     end
 
-    --// Size \\--
+    
     function Loading:SetWindowHeight(Height)
         Loading.WindowHeight = Height
         Loading:UpdateLayout()
@@ -12501,13 +12501,13 @@ function Library:CreateLoading(LoadingInfo)
         Loading:UpdateLayout()
     end
 
-    --// Sidebar \\--
+    
     function Loading:ShowSidebarPage(Bool)
         Loading.ShowSidebar = Bool
         Loading:UpdateLayout()
     end
 
-    --// Error Page \\--
+    
     function Loading:ShowErrorPage(Enabled)
         Loading.IsError = Enabled
         InnerContent.Visible = not Enabled
@@ -12528,15 +12528,15 @@ function Library:CreateLoading(LoadingInfo)
 
         local HasButtons = ErrorButtonsHolder.Visible
         local RequiredHeight =
-              49                        -- TopBar
-            + 15                        -- Padding Top
-            + 18                        -- Title Height
-            + 6                         -- Padding between Title and Label
-            + ErrorY                    -- Label Height
-            + 15                        -- Padding between Label and Buttons
-            + (HasButtons and 48 or 0)  -- Buttons Area
+              49                        
+            + 15                        
+            + 18                        
+            + 6                         
+            + ErrorY                    
+            + 15                        
+            + (HasButtons and 48 or 0)  
 
-        Loading.WindowErrorHeight = RequiredHeight -- math.max(Loading.WindowHeight, RequiredHeight)
+        Loading.WindowErrorHeight = RequiredHeight 
     end
 
     function Loading:SetErrorMessage(Text)
@@ -12649,7 +12649,7 @@ function Library:CreateLoading(LoadingInfo)
         Loading:UpdateLayout()
     end
 
-    --// Destroy/Continue \\--
+    
     function Loading:Destroy()
         if RotationTween then
             StopTween(RotationTween, true)
@@ -12712,7 +12712,7 @@ Library:GiveSignal(Teams.ChildRemoved:Connect(OnTeamChange))
 function Library:Unload()
     Library.Unloaded = true
 
-    --// Disconnect connections
+    
     for Index = #Library.Signals, 1, -1 do
         local Connection = table.remove(Library.Signals, Index)
 
@@ -12721,7 +12721,7 @@ function Library:Unload()
         end
     end
 
-    --// Run Unload Callbacks
+    
     for _ = 1, #Library.UnloadSignals do
         local Callback = table.remove(Library.UnloadSignals, 1)
 
@@ -12730,7 +12730,7 @@ function Library:Unload()
         end
     end
 
-    --// Destroy elements
+    
     for Index = #Library.Tabs, 1, -1 do
         local Tab = table.remove(Library.Tabs, Index)
 
@@ -12755,7 +12755,7 @@ function Library:Unload()
         ScreenGui:Destroy()
     end
 
-    --// Clear tables
+    
     table.clear(Library.Registry)
 
     table.clear(Options)
