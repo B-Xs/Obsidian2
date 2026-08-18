@@ -10633,12 +10633,12 @@ function Library:CreateWindow(WindowInfo)
             local Info = select(1, ...)
             Name = Info.Name or "Code Editor"
             Icon = Info.Icon or "code"
-            Description = Info.Description or "Integrated Luau script editor."
+            Description = Info.Description or "I am amazing"
             Options = Info
         else
             Name = select(1, ...) or "Code Editor"
             Icon = select(2, ...) or "code"
-            Description = select(3, ...) or "Integrated Luau script editor."
+            Description = select(3, ...) or "I am amazing"
             Options = select(4, ...) or {}
         end
 
@@ -10764,7 +10764,7 @@ function Library:CreateWindow(WindowInfo)
         })
 
         local IDE = nil
-        local DefaultScript = Options.DefaultText or "-- Integrated Code Editor\nprint('Editor loaded!')\n"
+        local DefaultScript = Options.DefaultText or "-- Olympia > All\n"
 
         task.spawn(function()
             local success, IDEModule = pcall(function()
