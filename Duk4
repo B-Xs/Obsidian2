@@ -2223,4 +2223,17 @@ function Library:AddDraggableButton(...)
             end
         end
 
-        local ElemIdx = table.find(Library.DraggableElements, Button)
+                local ElemIdx = table.find(Library.DraggableElements, Button)
+        if ElemIdx then
+            table.remove(Library.DraggableElements, ElemIdx)
+        end
+
+        if Button then
+            Button:Destroy()
+        end
+    end
+
+    return DraggableButton
+end
+
+return Library
